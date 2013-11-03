@@ -102,14 +102,7 @@ class BaseHandler(webapp2.RequestHandler):
 class MainHandler(BaseHandler):
   @user_required
   def get(self):
-    prefs = recommendations.loadMovieLens()
-    rows = recommendations.processMovie(prefs)
-    
-    # rows = [
-    #   {'movie':'movie1', 'time':'1990'},
-    #   {'movie':'movie2', 'time':'1991'},
-    #   {'movie':'movie3', 'time':'1992'},      
-    # ]
+    rows = recommendations.loadMovieData()
     params = {
       'rows': rows,
       'title': 'explore',

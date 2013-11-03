@@ -12,6 +12,8 @@
 						<th>Ratings</th>
 						<th>Movie</th>
 						<th>Time</th>
+						<th>Cover</th>
+						<th>Url</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -20,6 +22,12 @@
 						<td><div class="star"></div></td>
 						<td>{{row.movie}}</td>
 						<td>{{row.time}}</td>
+						<td>
+							<a rel="{{row.cover}}" class="screenshot"><span class="label label-info">Preview Cover</span></a>
+						</td>
+						<td>
+							<i class="icon-external-link"> </i><a href="{{row.url}}" target="_tab">View in IMDB</a>
+						</td>
 					</tr>
 					{% endfor %}
 				</tbody>
@@ -30,14 +38,18 @@
 
 <script>
 	$(document).ready(function() {
+			
 		$.fn.raty.defaults.path = 'static/images/rates';
 		$('.star').raty({
 			half: true,
 			cancel: true,
 		});
+		screenshotPreview();
+		
 	});
 </script>
 
 <script src='static/js/for_pages/table.js'></script>
+<script src='static/js/preview.js'></script>
 
 {% endblock %}

@@ -1,7 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from math import sqrt
-import re
+import re, json, csv
+
 # A dictionary of movie critics and their ratings of a small set of movies
 critics = {
     'Lisa Rose': {
@@ -221,7 +222,6 @@ def getRecommendedItems(prefs, itemMatch, user):
     rankings.reverse()
     return rankings
 
-
 def loadMovieLens(path='data/movielens'):
     # Get movie titles
     movies = {}
@@ -237,20 +237,14 @@ def loadMovieLens(path='data/movielens'):
         prefs[user][movies[movieid]] = float(rating)
     return prefs
 
-def processMovie(prefs):
+def loadMovieData():
     dictLs = []
-    keys = ['movie', 'time']
-    for i in prefs['1']:
-        ls = []
-        if i != 'unknown':
-            m = re.match(r"(.*)(\(\d+\))", i)
-            movie = m.group(1).strip(' ').split(',')[0]
-            time = m.group(2).lstrip('(').rstrip(')')
-            ls.append(movie)
-            ls.append(time)
-            dictLs.append(dict(zip(keys, ls)))
+    ls = []
+    keys = ['movie', 'time', 'cover', 'url']    
+    cr = csv.reader(open("data.csv","rb"))
+    for row in cr:    
+        dictLs.append(dict(zip(keys, row)))
     print dictLs
     return dictLs
-    
-prefs = loadMovieLens()
-processMovie(prefs)
+
+loadMovieData()
