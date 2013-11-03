@@ -3,10 +3,10 @@
   $(function() {
     $('.datatable').dataTable({
       aoColumnDefs: [
-        // {
-        //   bSortable: false,
-        //   aTargets: [0]
-        // }
+        {
+          bSortable: false,
+          aTargets: [3,4]
+        }
       ],
       aaSorting: []
     });
