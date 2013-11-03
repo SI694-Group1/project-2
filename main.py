@@ -100,6 +100,7 @@ class BaseHandler(webapp2.RequestHandler):
         self.session_store.save_sessions(self.response)
 
 class MainHandler(BaseHandler):
+  @user_required
   def get(self):
     prefs = recommendations.loadMovieLens()
     rows = recommendations.processMovie(prefs)
