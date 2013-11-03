@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel='stylesheet' href='static/css/fullcalendar.css'>
+    <link rel='stylesheet' href='static/css/datatables/datatables.css'>
+    <link rel='stylesheet' href='static/css/datatables/bootstrap.datatables.css'>
+    <link rel='stylesheet' href='static/scss/chosen.css'>
+    <link rel='stylesheet' href='static/scss/font-awesome/font-awesome.css'>
+    <link rel='stylesheet' href='static/css/app.css'>
+
+    <link href='http://fonts.googleapis.com/css?family=Oswald:300,400,700|Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
+
+    <link href="static/favicon.ico" rel="shortcut icon">
+    <link href="static/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      @javascript html5shiv respond.min
+    <![endif]-->
+
+    <style>
+      input {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+  <script src='static/js/jquery.sparkline.min.js'></script>
+  <script src='static/js/jquery.knob.js'></script>
+  <script src='static/js/jquery.raty.min.js'></script>  
+
+  <script src='static/js/bootstrap/tab.js'></script>
+  <script src='static/js/bootstrap/dropdown.js'></script>
+  <script src='static/js/bootstrap/collapse.js'></script>
+  <script src='static/js/bootstrap/transition.js'></script>
+  <script src='static/js/bootstrap/tooltip.js'></script>
+
+  <script src='static/js/fullcalendar.min.js'></script>
+  <script src='static/js/datatables/datatables.min.js'></script>
+  <script src='static/js/chosen.jquery.min.js'></script>
+  <script src='static/js/datatables/bootstrap.datatables.js'></script>
+  <script src='static/js/raphael-min.js'></script>
+  <script src='static/js/morris-0.4.3.min.js'></script>
+  <script src='static/js/for_pages/color_settings.js'></script>
+  <script src='static/js/application.js'></script>
+
+  <div class="all-wrapper">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="text-center">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="side-bar-wrapper collapse navbar-collapse navbar-ex1-collapse">
+          <a href="#" class="logo hidden-sm hidden-xs">
+          <i class="icon-star"></i>
+          <span>Recsys</span>
+          </a>
+          <ul class="side-menu side-menu-blue">
+            <li>
+              <a href="">
+              <span class="badge badge-notifications pull-right alert-animated">5</span>
+              <i class="icon-flag"></i> Notifications
+              </a>
+            </li>
+          </ul>
+          <div class="relative-w">
+            <ul class="side-menu side-menu-blue">
+              <li class='current'>
+                <a class='current' href="">
+                <i class={{ icon }}></i> {{ title }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="content-wrapper">
+          <div class="content-inner">
+            <div class="page-header page-header-blue">
+              <div class="header-links hidden-xs">
+                <a href=""><i class="icon-comments"></i> User Alerts</a>
+                <a href=""><i class="icon-cog"></i> Settings</a>
+                {% if not user %}
+                <a href="/login"><i class="icon-cog"></i> Login</a>
+                {% else %}
+                <a href="/logout"><i class="icon-signout"></i> Logout <strong>{{ user.name }}</strong> </a>
+                {% endif %}
+              </div>
+              <h1><i class={{ icon }}></i> {{ title }}</h1>
+            </div>
+            <div class="main-content">
+              {% block maincontent %}
+              {% endblock %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
