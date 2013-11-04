@@ -240,11 +240,8 @@ def loadMovieLens(path='data/movielens'):
 def loadMovieData():
     dictLs = []
     ls = []
-    keys = ['movie', 'time', 'cover', 'url']    
+    keys = ['r_movie','movie', 'time', 'cover', 'url']    
     cr = csv.reader(open("data.csv","rb"))
     for row in cr:    
         dictLs.append(dict(zip(keys, row)))
-    print dictLs
     return dictLs
-
-loadMovieData()

@@ -31,7 +31,7 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
   <script src='static/js/jquery.sparkline.min.js'></script>
   <script src='static/js/jquery.knob.js'></script>
-  <script src='static/js/jquery.raty.min.js'></script> 
+  <script src='static/js/jquery.raty.min.js'></script>
 
   <script src='static/js/bootstrap/tab.js'></script>
   <script src='static/js/bootstrap/dropdown.js'></script>
@@ -85,7 +85,20 @@
                 <span class="badge pull-right">0</span>
                 <i class=icon-thumbs-up></i> Recommend
                 </a>
-              </li>              
+              </li>
+              <li>
+                {% if not user %}
+                <a href="/login">
+                  <span class="badge pull-right"></span>
+                  <i class="icon-signin"></i> Login
+                </a>
+                {% else %}
+                <a href="/logout">
+                  <span class="badge pull-right"></span>
+                  <i class="icon-signout"></i> Logout
+                </a>
+                {% endif %}
+              </li>
             </ul>
           </div>
         </div>

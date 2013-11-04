@@ -35,12 +35,16 @@ def processMovie(prefs):
         ls = []
         if i != 'unknown':
             m = re.match(r"(.*)(\(\d+\))", i)
-            movie = m.group(1).strip(' ').split(',')[0]
+            r_movie = m.group(1)
+            movie = r_movie.strip(' ').split(',')[0]
             time = m.group(2).lstrip('(').rstrip(')')
             moviejson = json.loads(imdbAPIbyTitle(movie))
             if isinstance(moviejson, list):
-                cover = moviejson[0].get('poster', {}).get('cover', '')
+                cover = moviejson[0].get('poster', {}).get('imdb', 'static/images/nocover.png')
+                if cover == None:
+                    cover = 'static/images/nocover.png'
                 url = moviejson[0].get('imdb_url', '')
+                ls.append(r_movie)
                 ls.append(movie)
                 ls.append(time)
                 ls.append(cover)
