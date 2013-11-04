@@ -1,13 +1,11 @@
 (function() {
-  
+
   $(function() {
     $('.datatable').dataTable({
-      aoColumnDefs: [
-        {
-          bSortable: false,
-          aTargets: [3,4]
-        }
-      ],
+      aoColumnDefs: [{
+        bSortable: false,
+        aTargets: [3, 4]
+      }],
       aaSorting: []
     });
     return $(".datatable").each(function() {
