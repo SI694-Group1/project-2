@@ -1,6 +1,7 @@
 import urllib2, re, json
 import oauth2
 import csv
+import recommendations
 
 def imdbAPIbyTitle(title):
     api = 'http://mymovieapi.com/'
@@ -12,45 +13,52 @@ def imdbAPIbyTitle(title):
     movie = json.loads(jsonFile)
     return json.dumps(movie)
 
-def loadMovieLens(path='data/movielens'):
-    # Get movie titles
-    movies = {}
-    for line in open(path + '/u.item'):
-        (id, title) = line.split('|')[0:2]
-        movies[id] = title
-
-    # Load data
-    prefs = {}
-    for line in open(path + '/u.data'):
-        (user, movieid, rating, ts) = line.split('\t')
-        prefs.setdefault(user, {})
-        prefs[user][movies[movieid]] = float(rating)
-    return prefs
-
 def processMovie(prefs):
-    c = csv.writer(open("data.csv", "wb")) 
-    dictLs = []
-    keys = ['movie', 'time', 'cover', 'url']
-    for i in prefs['1']:
-        ls = []
-        if i != 'unknown':
-            m = re.match(r"(.*)(\(\d+\))", i)
-            r_movie = m.group(1)
-            movie = r_movie.strip(' ').split(',')[0]
-            time = m.group(2).lstrip('(').rstrip(')')
-            moviejson = json.loads(imdbAPIbyTitle(movie))
-            if isinstance(moviejson, list):
-                cover = moviejson[0].get('poster', {}).get('imdb', 'static/images/nocover.png')
-                if cover == None:
-                    cover = 'static/images/nocover.png'
-                url = moviejson[0].get('imdb_url', '')
-                ls.append(r_movie)
-                ls.append(movie)
-                ls.append(time)
-                ls.append(cover)
-                ls.append(url)
-                c.writerow(ls)                
-                print ls
+    with open('data.csv', 'wb') as f:
+        c = csv.writer(f)
+        dictLs = []
+        keys = ['movie', 'time', 'cover', 'url']
+        # for p in prefs:
+        for i in prefs['1']:
+            ls = []
+            if i != 'unknown':
+                m = re.match(r"(.*)(\(\d+\))", i)
+                r_movie = m.group(1)
+                movie = r_movie.strip(' ').split(',')[0]
+                time = m.group(2).lstrip('(').rstrip(')')
+                moviejson = json.loads(imdbAPIbyTitle(movie))
+                if isinstance(moviejson, list):
+                    cover = moviejson[0].get('poster', {}).get('imdb', 'static/images/nocover.png')
+                    if cover == None:
+                        cover = 'static/images/nocover.png'
+                    url = moviejson[0].get('imdb_url', '')
+                    ls.append(r_movie)
+                    ls.append(movie)
+                    ls.append(time)
+                    ls.append(cover)
+                    ls.append(url)
+                    c.writerow(ls)                
+                    print ls
 
-prefs = loadMovieLens()
+def buildSimMatrix(prefs):
+    sim = recommendations.calculateSimilarItems(prefs, n=10)
+    with open('sim.csv', 'wb') as f:
+        c = csv.writer(f)
+        for key, value in sim.items():
+            c.writerow([key, value])
+            
+def loadSimMatrix():
+    r = csv.reader(open('sim.csv', 'rb'))
+    mydict = dict(x for x in r)
+    print mydict
+    
+# Build movie data
+prefs = recommendations.loadMovieLens()
 processMovie(prefs)
+
+# Build similarity matrix
+# prefs = recommendations.loadMovieLens()
+# buildSimMatrix(prefs)
+
+# Load
+# loadSimMatrix()

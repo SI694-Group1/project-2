@@ -268,10 +268,14 @@ class LogoutHandler(BaseHandler):
     self.auth.unset_session()
     self.redirect(self.uri_for('login'))
 
-class AuthenticatedHandler(BaseHandler):
+class RecommendHandler(BaseHandler):
   @user_required
   def get(self):
-    self.render_template('authenticated.html')
+    params = {
+      'title': 'recommend',
+      'icon': 'icon-thumbs-up'
+    } 
+    self.render_template('recommend.html', params)
 
 config = {
   'webapp2_extras.auth': {
@@ -292,7 +296,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/login', LoginHandler, name='login'),
     webapp2.Route('/logout', LogoutHandler, name='logout'),
     webapp2.Route('/forgot', ForgotPasswordHandler, name='forgot'),
-    webapp2.Route('/authenticated', AuthenticatedHandler, name='authenticated')
+    webapp2.Route('/recommend', RecommendHandler, name='recommend')
 ], debug=True, config=config)
 
 logging.getLogger().setLevel(logging.DEBUG)

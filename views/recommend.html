@@ -1,0 +1,22 @@
+{% extends "main.html" %}
+
+{% block maincontent %}
+
+<div class="widget">
+	<h3 class="section-title first-title"><i class="icon-table"></i> Recommend</h3>
+	<div class="widget-content-white glossed">
+		<div class="padded">
+		</div>
+	</div>
+</div>			
+
+<script>
+	$(document).ready(function() {
+		
+		$('div.relative-w ul.side-menu li:nth-child(2)')
+			.addClass('current');
+		
+	});
+</script>
+
+{% endblock %}

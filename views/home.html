@@ -40,7 +40,11 @@
 </div>
 
 <script>
+
 	$(document).ready(function() {
+		
+		$('div.relative-w ul.side-menu li:nth-child(1)')
+			.addClass('current');
 			
 		$.fn.raty.defaults.path = 'static/images/rates';
 		$('.star').raty({
