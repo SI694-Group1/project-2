@@ -3,12 +3,27 @@
 {% block maincontent %}
 
 <div class="widget">
-	<h3 class="section-title first-title"><i class="icon-table"></i> Recommend</h3>
-	<div class="widget-content-white glossed">
-		<div class="padded">
+	<h3 class="section-title more-margin"><i class="icon-tasks"></i> Recommendations</h3>
+	<ul class="nav nav-pills">
+		<li class="active"><a href="#tableView" data-toggle="pill">Table View</a></li>
+		<li><a href="#cardView" data-toggle="pill">Card View</a></li>
+	</ul>
+	<div class="tab-content bottom-margin">
+		
+		<div class="tab-pane active" id="tableView">
+			<div class="padded shadowed-bottom">
+
+			</div>
 		</div>
+		
+		<div class="tab-pane" id="cardView">
+			<div class="shadowed-bottom">
+
+			</div>
+		</div>
+		
 	</div>
-</div>			
+</div>
 
 <script>
 	$(document).ready(function() {
