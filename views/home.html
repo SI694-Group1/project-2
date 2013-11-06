@@ -1,4 +1,4 @@
-{% extends "main.html" %}
+s{% extends "main.html" %}
 
 {% block maincontent %}
 
@@ -42,12 +42,12 @@
 <script>
 
 	$(document).ready(function() {
-		
+
 		$('#recommendSubmit').hide();
 
 		$('div.relative-w ul.side-menu li:nth-child(1)')
 			.addClass('current');
-			
+
 		$('div.relative-w ul.side-menu li:nth-child(1)')
 			.addClass('current');
 
@@ -67,10 +67,10 @@
 			    	delete movieRate[userMovie]
 			    }
 			    critics[userID] = movieRate;
-			    
+
 			    rateCount = _.size(movieRate);
 			    $('#rateCount').text(rateCount);
-			    
+
 			    if(rateCount >= 10) {
 			    	$('#recommendSubmit').fadeIn();
 			    } else {
@@ -79,6 +79,20 @@
 			    console.log(critics, _.size(movieRate));
 			}
 		});
+
+			$('#recommendSubmit').click(function() {
+				$.ajax({
+					url:'/recommend',
+					type: 'post',
+					data:JSON.stringify(critics),
+					success:function(data){
+						console.log(data)
+					},
+					contentType:'application/json',
+					processData: false
+				})
+				return false;
+			});
 
 		screenshotPreview();
 

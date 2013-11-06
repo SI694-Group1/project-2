@@ -3,6 +3,7 @@
 from google.appengine.ext.webapp import template
 from google.appengine.ext import ndb
 
+import json
 import logging
 import os.path
 import webapp2
@@ -281,6 +282,11 @@ class RecommendHandler(BaseHandler):
       'icon': 'icon-thumbs-up'
     } 
     self.render_template('recommend.html', params)
+  
+  def post(self):
+    data = json.loads(self.request.body)
+    self.response.out.write('Server side get the data: \n')
+    self.response.out.write(json.dumps(data))
 
 config = {
   'webapp2_extras.auth': {
