@@ -112,7 +112,10 @@ class MainHandler(BaseHandler):
 
 class SignupHandler(BaseHandler):
   def get(self):
-    self.render_template('signup.html')
+    params = {
+      'title': 'register'
+    }
+    self.render_template('signup.html', params)
 
   def post(self):
     user_name = self.request.get('username')
@@ -172,7 +175,8 @@ class ForgotPasswordHandler(BaseHandler):
     username = self.request.get('username')
     params = {
       'username': username,
-      'not_found': not_found
+      'not_found': not_found,
+      'title': 'forget'
     }
     self.render_template('forgot.html', params)
 
@@ -259,7 +263,8 @@ class LoginHandler(BaseHandler):
     username = self.request.get('username')
     params = {
       'username': username,
-      'failed': failed
+      'failed': failed,
+      'title': 'login'
     }
     self.render_template('login.html', params)
 

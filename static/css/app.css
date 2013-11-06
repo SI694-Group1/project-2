@@ -7758,6 +7758,10 @@ a.screenshot {
   cursor: pointer;
 }
 
+a.screenshot:hover {
+  text-decoration: none;
+}
+
 ::-webkit-scrollbar {
     width: 12px;
 }

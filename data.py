@@ -14,7 +14,7 @@ def imdbAPIbyTitle(title):
     return json.dumps(movie)
 
 def processMovie(prefs):
-    with open('data.csv', 'wb') as f:
+    with open('data/data.csv', 'wb') as f:
         c = csv.writer(f)
         dictLs = []
         keys = ['movie', 'time', 'cover', 'url']
@@ -23,8 +23,8 @@ def processMovie(prefs):
             ls = []
             if i != 'unknown':
                 m = re.match(r"(.*)(\(\d+\))", i)
-                r_movie = m.group(1)
-                movie = r_movie.strip(' ').split(',')[0]
+                r_movie = i
+                movie = m.group(1).strip(' ').split(',')[0]
                 time = m.group(2).lstrip('(').rstrip(')')
                 moviejson = json.loads(imdbAPIbyTitle(movie))
                 if isinstance(moviejson, list):
@@ -42,13 +42,13 @@ def processMovie(prefs):
 
 def buildSimMatrix(prefs):
     sim = recommendations.calculateSimilarItems(prefs, n=10)
-    with open('sim.csv', 'wb') as f:
+    with open('data/sim.csv', 'wb') as f:
         c = csv.writer(f)
         for key, value in sim.items():
             c.writerow([key, value])
             
 def loadSimMatrix():
-    r = csv.reader(open('sim.csv', 'rb'))
+    r = csv.reader(open('data/sim.csv', 'rb'))
     mydict = dict(x for x in r)
     print mydict
     

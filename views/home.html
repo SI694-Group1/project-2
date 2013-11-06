@@ -4,8 +4,8 @@
 
 <div class="widget">
   <div class="alert alert-info alert-dismissable">
-    <i class="icon-bell-alt"></i> You have rate for <span class="badge badge-info">10</span> movies.
-    <button type="button" class="btn btn-default btn-sm">View Recommendations</button>
+    <i class="icon-bell-alt"></i> You have rate for <span class="badge badge-info" id="rateCount">0</span> movies.
+    <button type="button" class="btn btn-default btn-sm" id="recommendSubmit">View Recommendations</button>
   </div>
 </div>
 
@@ -26,7 +26,7 @@
 				<tbody>
 					{% for row in rows %}
 					<tr>
-						<td><div class="star"></div></td>
+						<td><div class="star" data-movie="{{row.r_movie}}"></div></td>
 						<td>{{row.movie}}</td>
 						<td>{{row.time}}</td>
 						<td><a rel="{{row.cover}}" class="screenshot"><span class="label label-info">Preview Cover</span></a></td>
@@ -43,16 +43,45 @@
 
 	$(document).ready(function() {
 		
+		$('#recommendSubmit').hide();
+
 		$('div.relative-w ul.side-menu li:nth-child(1)')
 			.addClass('current');
 			
+		$('div.relative-w ul.side-menu li:nth-child(1)')
+			.addClass('current');
+
+		critics = {};
+		movieRate = {};
 		$.fn.raty.defaults.path = 'static/images/rates';
 		$('.star').raty({
 			half: true,
 			cancel: true,
+			click: function(score, evt) {
+					userID = {{user.user_id}};
+			    userScore = score;
+			    userMovie = $(this).data('movie');
+
+			    movieRate[userMovie] = userScore;
+			    if ( movieRate[userMovie] == null ) {
+			    	delete movieRate[userMovie]
+			    }
+			    critics[userID] = movieRate;
+			    
+			    rateCount = _.size(movieRate);
+			    $('#rateCount').text(rateCount);
+			    
+			    if(rateCount >= 10) {
+			    	$('#recommendSubmit').fadeIn();
+			    } else {
+			    	$('#recommendSubmit').fadeOut();
+			    }
+			    console.log(critics, _.size(movieRate));
+			}
 		});
+
 		screenshotPreview();
-		
+
 	});
 </script>
 

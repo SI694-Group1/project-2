@@ -237,11 +237,11 @@ def loadMovieLens(path='data/movielens'):
         prefs[user][movies[movieid]] = float(rating)
     return prefs
 
-def loadMovieData():
+def loadMovieData(path='data'):
     dictLs = []
     ls = []
-    keys = ['r_movie','movie', 'time', 'cover', 'url']    
-    cr = csv.reader(open("data.csv","rb"))
-    for row in cr:    
+    keys = ['r_movie','movie', 'time', 'cover', 'url']
+    cr = csv.reader(open(path + "/data.csv","rb"))
+    for row in cr:
         dictLs.append(dict(zip(keys, row)))
     return dictLs

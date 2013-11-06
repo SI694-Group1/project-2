@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    
     <link rel='stylesheet' href='static/css/fullcalendar.css'>
     <link rel='stylesheet' href='static/css/datatables/datatables.css'>
     <link rel='stylesheet' href='static/css/datatables/bootstrap.datatables.css'>
@@ -46,6 +49,7 @@
   <script src='static/js/morris-0.4.3.min.js'></script>
   <script src='static/js/for_pages/color_settings.js'></script>
   <script src='static/js/application.js'></script>
+  <script src='static/js/underscore-min.js'></script>
 
   <div class="all-wrapper">
     <div class="row">
@@ -59,7 +63,7 @@
           </button>
         </div>
         <div class="side-bar-wrapper collapse navbar-collapse navbar-ex1-collapse">
-          <a href="#" class="logo hidden-sm hidden-xs">
+          <a href="" class="logo hidden-sm hidden-xs">
           <i class="icon-star"></i>
           <span>Recsys</span>
           </a>
@@ -81,7 +85,7 @@
               </li>
               <li>
                 <a href="/recommend">
-                <span class="badge pull-right">0</span>
+                <span class="badge pull-right">10</span>
                 <i class=icon-thumbs-up></i> Recommend
                 </a>
               </li>
