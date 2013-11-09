@@ -87,6 +87,7 @@ s{% extends "main.html" %}
 					data:JSON.stringify(critics),
 					success: function(data){
 						console.log(data);
+						window.location.href='./recommend';			
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
      				console.log(errorThrown);

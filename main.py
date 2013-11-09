@@ -9,6 +9,7 @@ import os.path
 import webapp2
 import recommendations
 import item
+import math
 
 from webapp2_extras import auth
 from webapp2_extras import sessions
@@ -283,21 +284,46 @@ class LogoutHandler(BaseHandler):
 class RecommendHandler(BaseHandler):
   @user_required
   def get(self):
+    user = self.user
+    user_id = user.get_id()
+    results = UserRating.query(UserRating.userid == str(user_id))
+    
+    user_ratings = dict()
+    for ur in results:
+      user_ratings[ur.userid] = dict(zip(ur.movies, ur.ratings))
+    sim = item.itemMatch
+    recs = recommendations.getRecommendedItems(user_ratings, sim, str(user_id))
+
+    dictLs = []
+    keys = ['rating', 'movie']
+    for rec in recs:
+      ls = []
+      (rating, movie) = rec
+      ls.append(round(rating, 1))
+      ls.append(movie)
+      dictLs.append(dict(zip(keys, ls)))
+    logging.info(dictLs[0])
+     
     params = {
+      'recs': dictLs[:10],
       'title': 'recommend',
       'icon': 'icon-thumbs-up'
-    } 
-    self.render_template('recommend.html', params)   
-  
+    }
+    self.render_template('recommend.html', params)
+
   def post(self):
     user = self.user
-    
     user_id = user.get_id()
-    data = json.loads(self.request.body)
-    sim = item.itemMatch
-    test = recommendations.getRecommendedItems(data, sim, str(user_id))
-    
-    self.response.out.write(test)
+    prefs = json.loads(self.request.body)
+    for p in prefs:
+      u = UserRating()
+      u.userid = p
+      ratings = prefs[p]
+      for r in ratings:
+        u.movies.append(r)
+        u.ratings.append(float(ratings[r]))
+      u.put()
+      self.response.out.write(u)
 
 config = {
   'webapp2_extras.auth': {

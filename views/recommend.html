@@ -12,13 +12,42 @@
 		
 		<div class="tab-pane active" id="tableView">
 			<div class="padded shadowed-bottom">
-
+				<table class="table table-striped table-bordered table-hover datatable">
+					<thead>
+						<tr>
+							<th>Ratings</th>
+							<th>Movie</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for rec in recs %}
+						<tr>
+							<td>{{rec.rating}}</td>
+							<td>{{rec.movie}}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
 			</div>
 		</div>
 		
 		<div class="tab-pane" id="cardView">
 			<div class="shadowed-bottom">
-
+				<div class="row">
+					{% for rec in recs %}
+					<div class="col-lg-3 col-md-4 col-sm-6 text-center">
+						<div class="widget-content-blue-wrapper changed-up">
+							<div class="widget-content-blue-inner padded">
+								<div class="pre-value-block"><div class="star" data-score="{{rec.rating}}"></div></div>
+								<div class="value-block">
+									<div class="value-self">{{rec.rating}}</div>
+									<div class="value-sub" style="height:30px;">{{rec.movie}}</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					{% endfor %}					
+				</div>
 			</div>
 		</div>
 		
@@ -30,8 +59,18 @@
 		
 		$('div.relative-w ul.side-menu li:nth-child(2)')
 			.addClass('current');
+			
+		$.fn.raty.defaults.path = 'static/images/rates';
+		$('.star').raty({
+			readOnly: true,
+		  score: function() {
+		    return $(this).attr('data-score');
+		  }
+		});
 		
 	});
 </script>
+
+<script src='static/js/for_pages/table.js'></script>
 
 {% endblock %}
