@@ -42,23 +42,25 @@ def processMovie(prefs):
 
 def buildSimMatrix(prefs):
     sim = recommendations.calculateSimilarItems(prefs, n=10)
-    with open('data/sim.csv', 'wb') as f:
-        c = csv.writer(f)
-        for key, value in sim.items():
-            c.writerow([key, value])
+    return sim
+    # with open('data/sim.csv', 'wb') as f:
+    #     c = csv.writer(f)
+    #     for key, value in sim.items():
+    #         c.writerow([key, value])
             
-def loadSimMatrix():
-    r = csv.reader(open('data/sim.csv', 'rb'))
-    mydict = dict(x for x in r)
-    print mydict
+# def loadSimMatrix():
+#     r = csv.reader(open('data/sim.csv', 'rb'))
+#     mydict = dict(x for x in r)
+#     return mydict
     
 # Build movie data
-prefs = recommendations.loadMovieLens()
-processMovie(prefs)
+# prefs = recommendations.loadMovieLens()
+# processMovie(prefs)
 
 # Build similarity matrix
 # prefs = recommendations.loadMovieLens()
-# buildSimMatrix(prefs)
+# sim = buildSimMatrix(prefs)
+# print sim
 
 # Load
 # loadSimMatrix()

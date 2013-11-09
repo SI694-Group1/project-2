@@ -4,7 +4,7 @@
     $('.datatable').dataTable({
       aoColumnDefs: [{
         bSortable: false,
-        aTargets: [3, 4]
+        aTargets: [0, 3, 4]
       }],
       aaSorting: []
     });

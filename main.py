@@ -8,6 +8,7 @@ import logging
 import os.path
 import webapp2
 import recommendations
+import item
 
 from webapp2_extras import auth
 from webapp2_extras import sessions
@@ -281,12 +282,15 @@ class RecommendHandler(BaseHandler):
       'title': 'recommend',
       'icon': 'icon-thumbs-up'
     } 
-    self.render_template('recommend.html', params)
+    self.render_template('recommend.html', params)   
   
-  def post(self):
+  def post(self):    
     data = json.loads(self.request.body)
-    self.response.out.write('Server side get the data: \n')
-    self.response.out.write(json.dumps(data))
+    sim = item.itemMatch
+    test = recommendations.getRecommendedItems(data, sim, '5629499534213120')
+    self.response.out.write(data)
+    self.response.out.write('\n')
+    self.response.out.write(test)
 
 config = {
   'webapp2_extras.auth': {

@@ -85,9 +85,12 @@ s{% extends "main.html" %}
 					url:'/recommend',
 					type: 'post',
 					data:JSON.stringify(critics),
-					success:function(data){
-						console.log(data)
+					success: function(data){
+						console.log(data);
 					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+     				console.log(errorThrown);
+  				},
 					contentType:'application/json',
 					processData: false
 				})

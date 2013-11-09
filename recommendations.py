@@ -53,6 +53,16 @@ critics = {
              'Superman Returns': 4.0},
 }
 
+test = {
+    'Claudia Puig': {
+        'Snakes on a Plane': 3.5,
+        'Just My Luck': 3.0,
+        'The Night Listener': 4.5,
+        'Superman Returns': 4.0,
+        'You, Me and Dupree': 2.5,
+    }    
+}
+
 
 def sim_distance(prefs, p1, p2):
     '''
@@ -245,3 +255,8 @@ def loadMovieData(path='data'):
     for row in cr:
         dictLs.append(dict(zip(keys, row)))
     return dictLs
+
+def loadSimMatrix():
+    r = csv.reader(open('data/sim.csv', 'rb'))
+    mydict = dict(x for x in r)
+    return mydict
