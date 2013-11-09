@@ -16,6 +16,11 @@ from webapp2_extras import sessions
 from webapp2_extras.auth import InvalidAuthIdError
 from webapp2_extras.auth import InvalidPasswordError
 
+class UserRating(ndb.Model):
+  userid=ndb.StringProperty()
+  movies=ndb.StringProperty(repeated=True)
+  ratings=ndb.FloatProperty(repeated=True)
+
 def user_required(handler):
   """
     Decorator that checks if there's a user associated with the current session.
@@ -284,12 +289,14 @@ class RecommendHandler(BaseHandler):
     } 
     self.render_template('recommend.html', params)   
   
-  def post(self):    
+  def post(self):
+    user = self.user
+    
+    user_id = user.get_id()
     data = json.loads(self.request.body)
     sim = item.itemMatch
-    test = recommendations.getRecommendedItems(data, sim, '5629499534213120')
-    self.response.out.write(data)
-    self.response.out.write('\n')
+    test = recommendations.getRecommendedItems(data, sim, str(user_id))
+    
     self.response.out.write(test)
 
 config = {

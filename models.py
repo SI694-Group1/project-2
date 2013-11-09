@@ -34,8 +34,3 @@ class User(webapp2_extras.appengine.auth.models.User):
         return user, timestamp
 
     return None, None
-    
-class UserRating(ndb.Model):
-    userid=ndb.StringProperty()
-    movies=ndb.StringProperty(repeated=True)
-    ratings=ndb.FloatProperty(repeated=True)
