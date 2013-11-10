@@ -12,7 +12,7 @@ s{% extends "main.html" %}
 <div class="widget">
   <div class="alert alert-success alert-dismissable" id="recMessage">
 		<i class="icon-check-sign"></i> Recommendation has been generated.
-    <button type="button" class="btn btn-default btn-sm" id="recMessageBtn">View recommendation</button>
+    <button type="button" class="btn btn-default btn-sm" id="recMessageBtn">View Rrecommendation</button>
 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true" style="margin-top:8px;">×</button>
   </div>
 </div>
@@ -34,11 +34,11 @@ s{% extends "main.html" %}
 				<tbody>
 					{% for row in rows %}
 					<tr>
-						<td><div class="star" data-movie="{{row.r_movie}}"></div></td>
+						<td><div class="star" data-movie="{{row.title}}"></div></td>
 						<td>{{row.movie}}</td>
-						<td>{{row.time}}</td>
-						<td><a rel="{{row.cover}}" class="screenshot"><span class="label label-info">Preview Cover</span></a></td>
-						<td><i class="icon-external-link"> </i><a href="{{row.url}}" target="_tab">View in IMDB</a></td>
+						<td>{{row.movietime}}</td>
+						<td><a rel="{{row.moviecover}}" class="screenshot"><span class="label label-info">Preview Cover</span></a></td>
+						<td><i class="icon-external-link"> </i><a href="{{row.movieurl}}" target="_tab">View in IMDB</a></td>
 					</tr>
 					{% endfor %}
 				</tbody>

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from math import sqrt
 import re, json, csv
+import random
 
 # A dictionary of movie critics and their ratings of a small set of movies
 critics = {
@@ -249,12 +250,19 @@ def loadMovieLens(path='data/movielens'):
 
 def loadMovieData(path='data'):
     dictLs = []
-    ls = []
-    keys = ['r_movie','movie', 'time', 'cover', 'url']
-    cr = csv.reader(open(path + "/data.csv","rb"))
-    for row in cr:
-        dictLs.append(dict(zip(keys, row)))
-    return dictLs
+    keys = ['title', 'movie', 'movietime', 'moviecover', 'movieurl']
+    with open(path + '/data.csv', 'rb') as inf:
+        data = [(row) for row in csv.reader(inf)]
+        # random_data = random.sample(data, 100)
+        for d in data[:100]:
+            dictLs.append(dict(zip(keys, d)))
+        print dictLs
+        return dictLs
+        
+def searchMovieData(movie, path='data'):
+    with open(path + '/data.csv', 'rb') as inf:
+        data = [row for row in inf if row.split(',')[0] == movie]
+        return data
 
 def loadSimMatrix():
     r = csv.reader(open('data/sim.csv', 'rb'))

@@ -1,7 +1,10 @@
+# -*- coding: utf-8 -*-
+
 import urllib2, re, json
 import oauth2
 import csv
 import recommendations
+import time
 
 def imdbAPIbyTitle(title):
     api = 'http://mymovieapi.com/'
@@ -13,32 +16,41 @@ def imdbAPIbyTitle(title):
     movie = json.loads(jsonFile)
     return json.dumps(movie)
 
-def processMovie(prefs):
-    with open('data/data.csv', 'wb') as f:
-        c = csv.writer(f)
-        dictLs = []
-        keys = ['movie', 'time', 'cover', 'url']
-        # for p in prefs:
-        for i in prefs['1']:
+def processMovie(path='data'):
+    with open(path + '/data.csv', 'wb') as f:
+        csv_writer = csv.writer(f)
+
+        for line in open(path + '/movielens/u.item'):
+            id = line.split('|')[0]
+            title = line.split('|')[1]
+            movietime = line.split('|')[2]
+            if movietime != '':
+                movietime = time.strftime('%m/%d/%Y', time.strptime(movietime, '%d-%b-%Y'))
+            movieurl = line.split('|')[4]
             ls = []
-            if i != 'unknown':
-                m = re.match(r"(.*)(\(\d+\))", i)
-                r_movie = i
-                movie = m.group(1).strip(' ').split(',')[0]
-                time = m.group(2).lstrip('(').rstrip(')')
-                moviejson = json.loads(imdbAPIbyTitle(movie))
+            
+            m = re.match(r"(.*)(\(\d+\))", title)
+            if m:
+                movie = m.group(1).strip(' ')
+                if '(' in movie and ')' in movie:
+                    movie = movie.split('(')[1].rstrip(')')
+                  
+            try:
+                moviejson = json.loads(imdbAPIbyTitle(unicode(movie)))
                 if isinstance(moviejson, list):
-                    cover = moviejson[0].get('poster', {}).get('imdb', 'static/images/nocover.png')
-                    if cover == None:
-                        cover = 'static/images/nocover.png'
-                    url = moviejson[0].get('imdb_url', '')
-                    ls.append(r_movie)
-                    ls.append(movie)
-                    ls.append(time)
-                    ls.append(cover)
-                    ls.append(url)
-                    c.writerow(ls)                
-                    print ls
+                    moviecover = moviejson[0].get('poster', {}).get('imdb', 'static/images/nocover.png')
+                    if moviecover == None:
+                        moviecover = 'static/images/nocover.png'
+            except:
+                moviecover = 'static/images/nocover.png'
+            
+            ls.append(title)
+            ls.append(movie)
+            ls.append(movietime)
+            ls.append(unicode(moviecover).encode('utf-8'))
+            ls.append(movieurl)
+            csv_writer.writerow(ls)
+            print ls
 
 def buildSimMatrix(prefs):
     sim = recommendations.calculateSimilarItems(prefs, n=10)
@@ -47,15 +59,14 @@ def buildSimMatrix(prefs):
     #     c = csv.writer(f)
     #     for key, value in sim.items():
     #         c.writerow([key, value])
-            
+
 # def loadSimMatrix():
 #     r = csv.reader(open('data/sim.csv', 'rb'))
 #     mydict = dict(x for x in r)
 #     return mydict
-    
+
 # Build movie data
-# prefs = recommendations.loadMovieLens()
-# processMovie(prefs)
+# processMovie()
 
 # Build similarity matrix
 # prefs = recommendations.loadMovieLens()
