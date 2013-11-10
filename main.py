@@ -312,21 +312,23 @@ class RecommendHandler(BaseHandler):
     }
     self.render_template('recommend.html', params)
 
+class AjaxHandler(BaseHandler):
+  @user_required
   def post(self):
-    user = self.user
-    user_id = user.get_id()
-    UserRatingKeys = UserRating.query(UserRating.userid == str(user_id)).fetch(keys_only=True)
-    ndb.delete_multi(UserRatingKeys)    
-    prefs = json.loads(self.request.body)
-    for p in prefs:
-      u = UserRating()
-      u.userid = p
-      ratings = prefs[p]
-      for r in ratings:
-        u.movies.append(r)
-        u.ratings.append(float(ratings[r]))
-      u.put()
-      self.response.out.write(u)
+      user = self.user
+      user_id = user.get_id()
+      UserRatingKeys = UserRating.query(UserRating.userid == str(user_id)).fetch(keys_only=True)
+      ndb.delete_multi(UserRatingKeys)    
+      prefs = json.loads(self.request.body)
+      for p in prefs:
+        u = UserRating()
+        u.userid = p
+        ratings = prefs[p]
+        for r in ratings:
+          u.movies.append(r)
+          u.ratings.append(float(ratings[r]))
+        u.put()
+        self.response.out.write(u)
 
 config = {
   'webapp2_extras.auth': {
@@ -347,7 +349,8 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/login', LoginHandler, name='login'),
     webapp2.Route('/logout', LogoutHandler, name='logout'),
     webapp2.Route('/forgot', ForgotPasswordHandler, name='forgot'),
-    webapp2.Route('/recommend', RecommendHandler, name='recommend')
+    webapp2.Route('/recommend', RecommendHandler, name='recommend'),
+    webapp2.Route('/ajax', AjaxHandler, name='ajax')
 ], debug=True, config=config)
 
 logging.getLogger().setLevel(logging.DEBUG)

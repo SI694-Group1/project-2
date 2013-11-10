@@ -5,7 +5,15 @@ s{% extends "main.html" %}
 <div class="widget">
   <div class="alert alert-info alert-dismissable">
     <i class="icon-bell-alt"></i> You have rate for <span class="badge badge-info" id="rateCount">0</span> movies.
-    <button type="button" class="btn btn-default btn-sm" id="recommendSubmit">View Recommendations</button>
+    <button type="button" class="btn btn-default btn-sm" id="recommendSubmit">Submit Rating</button>
+  </div>
+</div>
+
+<div class="widget">
+  <div class="alert alert-success alert-dismissable" id="recMessage">
+		<i class="icon-check-sign"></i> Recommendation has been generated.
+    <button type="button" class="btn btn-default btn-sm" id="recMessageBtn">View recommendation</button>
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true" style="margin-top:8px;">×</button>
   </div>
 </div>
 
@@ -44,9 +52,7 @@ s{% extends "main.html" %}
 	$(document).ready(function() {
 
 		$('#recommendSubmit').hide();
-
-		$('div.relative-w ul.side-menu li:nth-child(1)')
-			.addClass('current');
+		$('#recMessage').hide()
 
 		$('div.relative-w ul.side-menu li:nth-child(1)')
 			.addClass('current');
@@ -82,12 +88,15 @@ s{% extends "main.html" %}
 
 			$('#recommendSubmit').click(function() {
 				$.ajax({
-					url:'/recommend',
+					url:'/ajax',
 					type: 'post',
 					data:JSON.stringify(critics),
 					success: function(data){
 						console.log(data);
-						window.location.href='./recommend';			
+						$('#recMessage').fadeIn();
+						$('#recMessageBtn').on('click', function() {
+							window.location.replace("./recommend");
+						});
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
      				console.log(errorThrown);
@@ -97,6 +106,11 @@ s{% extends "main.html" %}
 				})
 				return false;
 			});
+			
+		$('button.close').on('click', function(event) {
+			event.preventDefault();
+			$(this).parent().slideUp();
+		});			
 
 		screenshotPreview();
 
