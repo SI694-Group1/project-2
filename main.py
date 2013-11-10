@@ -295,10 +295,11 @@ class RecommendHandler(BaseHandler):
     recs = recommendations.getRecommendedItems(user_ratings, sim, str(user_id))
 
     dictLs = []
-    keys = ['rating', 'movie']
+    keys = ['index', 'rating', 'movie']
     for rec in recs:
       ls = []
       (rating, movie) = rec
+      ls.append(len(dictLs)+1)
       ls.append(round(rating, 1))
       ls.append(movie)
       dictLs.append(dict(zip(keys, ls)))
@@ -314,6 +315,8 @@ class RecommendHandler(BaseHandler):
   def post(self):
     user = self.user
     user_id = user.get_id()
+    UserRatingKeys = UserRating.query(UserRating.userid == str(user_id)).fetch(keys_only=True)
+    ndb.delete_multi(UserRatingKeys)    
     prefs = json.loads(self.request.body)
     for p in prefs:
       u = UserRating()

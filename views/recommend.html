@@ -15,6 +15,7 @@
 				<table class="table table-striped table-bordered table-hover datatable">
 					<thead>
 						<tr>
+							<th>Rank</th>
 							<th>Ratings</th>
 							<th>Movie</th>
 						</tr>
@@ -22,6 +23,7 @@
 					<tbody>
 						{% for rec in recs %}
 						<tr>
+							<td><span class="label label-info">Top <span class="badge badge-info">{{rec.index}}</span></span></td>
 							<td>{{rec.rating}}</td>
 							<td>{{rec.movie}}</td>
 						</tr>
@@ -38,8 +40,11 @@
 					<div class="col-lg-3 col-md-4 col-sm-6 text-center">
 						<div class="widget-content-blue-wrapper changed-up">
 							<div class="widget-content-blue-inner padded">
-								<div class="pre-value-block"><div class="star" data-score="{{rec.rating}}"></div></div>
+								<div class="pre-value-block">
+									<span class="label label-info">Top <span class="badge badge-info">{{rec.index}}</span></span>
+								</div>
 								<div class="value-block">
+									<div class="star" data-score="{{rec.rating}}" style="margin-left:40px;"></div>									
 									<div class="value-self">{{rec.rating}}</div>
 									<div class="value-sub" style="height:30px;">{{rec.movie}}</div>
 								</div>
@@ -71,6 +76,6 @@
 	});
 </script>
 
-<script src='static/js/for_pages/table.js'></script>
+<script src='static/js/for_pages/table_r.js'></script>
 
 {% endblock %}
