@@ -6,7 +6,7 @@
 
 {% if not_found %}
   <div class="alert alert-danger alert-dismissable">
-    <i class="icon-remove-sign"></i> <strong>Not found!</strong> We could not found any user with the given username.
+    <i class="icon-remove-sign"></i> <strong>Not found!</strong> We could not find any user with the given username.
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
   </div>
 {% endif %}
@@ -15,7 +15,7 @@
 	<div class="login-logo-w">
 		<a href="" class="logo">
 			<i class="icon-star"></i>
-			<span>RecSys</span>
+			<span>Movies for you!</span>
 		</a>
 	</div>
 	<div class="row">
@@ -25,7 +25,7 @@
 					<div class="main-content main-content-grey-gradient no-page-header">
 						<div class="main-content-inner">
 							<form class="form" action= "/forgot" method="POST">
-								<h3 class="form-title form-title-first"><i class="icon-lock"></i> Forget Password </h3>
+								<h3 class="form-title form-title-first"><i class="icon-lock"></i> Forgot Password? </h3>
 								<div class="form-group">
 									<label for="username">Username</label>
 									<input type="text" name="username" class="form-control" value="{{ username }}" placeholder="Username"/>

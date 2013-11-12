@@ -4,15 +4,15 @@ s{% extends "main.html" %}
 
 <div class="widget">
   <div class="alert alert-info alert-dismissable">
-    <i class="icon-bell-alt"></i> You have rate for <span class="badge badge-info" id="rateCount">0</span> movies.
-    <button type="button" class="btn btn-default btn-sm" id="recommendSubmit">Submit Rating</button>
+    <i class="icon-bell-alt"></i> You have rated <span class="badge badge-info" id="rateCount">0</span> movies.
+    <button type="button" class="btn btn-default btn-sm" id="recommendSubmit">Submit Ratings</button>
   </div>
 </div>
 
 <div class="widget">
   <div class="alert alert-success alert-dismissable" id="recMessage">
-		<i class="icon-check-sign"></i> Recommendation has been generated.
-    <button type="button" class="btn btn-default btn-sm" id="recMessageBtn">View Rrecommendation</button>
+		<i class="icon-check-sign"></i> Recommendations have been generated.
+    <button type="button" class="btn btn-default btn-sm" id="recMessageBtn">View Recommendations</button>
 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true" style="margin-top:8px;">×</button>
   </div>
 </div>
@@ -24,11 +24,11 @@ s{% extends "main.html" %}
 			<table class="table table-striped table-bordered table-hover datatable">
 				<thead>
 					<tr>
-						<th>Ratings</th>
+						<th>Rating</th>
 						<th>Movie</th>
 						<th>Time</th>
 						<th>Cover</th>
-						<th>Url</th>
+						<th>URL</th>
 					</tr>
 				</thead>
 				<tbody>
